@@ -20,3 +20,27 @@
   - AZごとにHVを束ねて管理するCTLのクラスタを用意し、そのクラスタ群をグローバルで管理するCTLを用意します
 
 ![IaaS](./IaaS.dio.svg)
+
+## Network
+
+![Network](./Network.dio.svg)
+
+- Shared or Dedicated
+  - Shared
+    - アンダーレイのネットワーク機器や、それに近いノード(L4LBやVPCGWなどは)はSharedとする
+    - Sharedレイヤーは帯域を余裕思った状態で土管運用できるようにする
+    - Sharedレイヤーの通信は暗号化する必要はなく、その上のレイヤーで暗号化をするべき
+  - Dedicated
+    - 暗号化されない通信を扱う場合はDedicatedがMust
+    - TLSを終端するようなL7LBは基本的にDedicatedにする
+- ネットワーク分離
+  - ネットワークは、その経路、および中間機器によるACLによって分離されます
+  - SharedPublicNetwork (For VPC)
+    - PublicIPで、インターネットからの通信を受けます
+    - ACLは、そのサービスポートのみをACLで解放します
+      - ACL例: src=any, dst=x.x.x.x/32, dst_port=443
+  - SharedPrivateNetwork (For VPC)
+    - PrivateIPで、社内からの通信を受けます
+    - ACLは、そのサービスポートのみをACLで解放します
+      - ACL例: src=any, dst=x.x.x.x/32, dst_port=443
+      - ACL例: src=x.x.x.x/24, dst=x.x.x.x/32, dst_port=443
