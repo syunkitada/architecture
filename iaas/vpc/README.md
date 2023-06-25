@@ -9,9 +9,10 @@
   - NICのオフロードが期待できる
 
 ## 用語
-- VPC: テナント専用のネットワーク空間
+- VPC: テナント専用のプライベートネットワーク空間
+- VPCSubnet: VPCのサブネット
 - AZCluster: AZごとの管理システム
-- VPCGW: VPCのデフォルトゲートウェイ相当（VPC外との通信や、VPC内でもルートが不明な場合はこれを利用する）
+- AZGW: AZごとのGW、VPC内の通信のルーティング補助を行うためのGateway、AndromedaのHorverboardの役割に近い
 - VPCLB: VPC内でのLB（VIPにVMをメンバとして紐づけて利用する）
 - VPCIP: VPC内でのVMのIPのこと
 - VPCVIP: VPC内でのVIPのこと
